@@ -22,13 +22,32 @@
     </header>
 
     <!-- ANCHOR Main -->
-    <main class="container">
-      <!-- NOTE Bank -->
-      <div class="d-flex flex-column align-items-center mt-3">
+    <main class="container-fluid">
+      <!-- NOTE Bank & Bet Info -->
+      <div class="d-flex justify-content-center mt-3">
         <div class="px-5 bg-dark rounded border border-2 border-info text-light text-center">
+          <p>Bets Won</p>
+          <p id="betsWon"></p>
+        </div>
+
+        <div class="px-5 bg-dark rounded border border-2 border-info text-light text-center ms-3">
+          <p>Money Won</p>
+          <p id="moneyWon"></p>
+        </div>
+
+        <div class="px-5 bg-dark rounded border border-2 border-info text-light text-center mx-3">
           <p>Bank</p>
-          <!-- TODO How much in bank should go here -->
           <p>$<span id="bank"></span></p>
+        </div>
+
+        <div class="px-5 bg-dark rounded border border-2 border-info text-light text-center me-3">
+          <p>Money Lost</p>
+          <p id="moneyLost"></p>
+        </div>
+
+        <div class="px-5 bg-dark rounded border border-2 border-info text-light text-center">
+          <p>Bets Lost</p>
+          <p id="betsLost"></p>
         </div>
       </div>
       <!-- NOTE Teams -->
@@ -36,7 +55,7 @@
         <!-- NOTE Team 1 -->
         <div class="col-md-6 text-center py-1 bg-info rounded">
           <h4>Team 1</h4>
-          <p id="team1"></p>
+          <div id="team1" class="row justify-content-center px-3"></div>
           <div class="row">
             <div class="col-md-4">
               <button type="button" id="bet-blue-5" class="btn btn-primary rounded-pill px-3">Bet 5</button>
@@ -49,13 +68,13 @@
             </div>
           </div>
           <div class="d-flex justify-content-center mt-3">
-            <button type="button" id="bet-blue-all" class="btn btn-dark rounded-pill px-4">Bet it all</button>
+            <button type="button" id="bet-blue-all" class="btn btn-dark rounded-pill px-4">All in</button>
           </div>
         </div>
         <!-- NOTE Team 2 -->
         <div class="col-md-6 text-center py-1 bg-danger rounded">
           <h4>Team 2</h4>
-          <p id="team2"></p>
+          <div id="team2" class="row justify-content-center px-3"></div>
           <div class="row">
             <div class="col-md-4">
               <button type="button" id="bet-red-5" class="btn btn-warning rounded-pill px-3">Bet 5</button>
@@ -68,7 +87,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-center mt-3">
-            <button type="button" id="bet-red-all" class="btn btn-dark rounded-pill px-4">Bet it all</button>
+            <button type="button" id="bet-red-all" class="btn btn-dark rounded-pill px-4">All in</button>
           </div>
         </div>
       </section>

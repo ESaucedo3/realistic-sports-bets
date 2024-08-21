@@ -1,8 +1,13 @@
-// Bank
-let bank = 100;
+let bank = 100; // Bank
+// Bets counter
+let betsWon = 0;
+let betsLost = 0;
+let moneyWon = 0;
+let moneyLost = 0;
 
 // Players
 const players = [
+  {teamNumber: 1, emoji: '🦇', skill: 170, name: 'Batman'},
   {teamNumber: 1, emoji: '🏃‍♂️', skill: 10, name: "D'Marcus Williums"},
   {teamNumber: 1, emoji: '🤾‍♂️', skill: 30, name: 'Tyroil Smoochie-Wallace'},
   {teamNumber: 1, emoji: '🏇', skill: 88, name: 'Jackmerius Tacktheratrix'},
@@ -26,8 +31,7 @@ const players = [
 ];
 
 // Upon intial load
-drawTeam1();
-drawTeam2();
+drawTeams();
 drawBank();
 
 // Acquired Elements
@@ -52,25 +56,36 @@ betRed25.addEventListener('click', () => betTeam2(25));
 betRed100.addEventListener('click', () => betTeam2(100));
 betRedAll.addEventListener('click', () => betTeam2(bank));
 
-function drawTeam1() {
+function drawTeams() {
   const team1 = document.getElementById('team1');
-  team1.innerHTML = '';
-  let team1Players = players.filter((player) => player.teamNumber === 1);
-  team1Players.forEach((player) => {
-    team1.innerHTML += player.emoji;
-  });
-}
-
-function drawTeam2() {
   const team2 = document.getElementById('team2');
+
+  team1.innerHTML = '';
   team2.innerHTML = '';
-  let team2Players = players.filter((player) => player.teamNumber == 2);
+
+  let team1Players = players.filter((player) => player.teamNumber === 1);
+  let team2Players = players.filter((player) => player.teamNumber === 2);
+
+  team1Players.forEach((player) => {
+    team1.innerHTML += ` <div class="col-2 bg-dark border border-2 border-light my-3 me-2 p-1">
+                          <p>${player.name}</p>
+                          <label>${player.emoji}</label>
+                        </div>`;
+  });
   team2Players.forEach((player) => {
-    team2.innerHTML += player.emoji;
+    team2.innerHTML += ` <div class="col-2 bg-dark border border-2 border-light my-3 me-2 p-1">
+                          <p>${player.name}</p>
+                          <label>${player.emoji}</label>
+                        </div>`;
   });
 }
 
 function betTeam1(bet) {
+  if (bank < bet) {
+    alert('Not enough muneh');
+    return;
+  }
+
   let team1Players = players.filter((player) => player.teamNumber === 1);
   let team2Players = players.filter((player) => player.teamNumber === 2);
 
@@ -87,15 +102,25 @@ function betTeam1(bet) {
 
   if (team1PlayersTotalSkill > team2PlayersTotalSkill) {
     bank += bet;
+    ++betsWon;
+    moneyWon += bet;
     alert('WIN!');
   } else {
     bank -= bet;
+    ++betsLost;
+    moneyLost += bet;
     alert('LOSS!');
   }
+
   drawBank();
 }
 
 function betTeam2(bet) {
+  if (bank < bet) {
+    alert('Not enough muneh');
+    return;
+  }
+
   let team1Players = players.filter((player) => player.teamNumber === 1);
   let team2Players = players.filter((player) => player.teamNumber === 2);
 
@@ -112,11 +137,16 @@ function betTeam2(bet) {
 
   if (team2PlayersTotalSkill > team1PlayersTotalSkill) {
     bank += bet;
+    ++betsWon;
+    moneyWon += bet;
     alert('WIN!');
   } else {
     bank -= bet;
+    ++betsLost;
+    moneyLost += bet;
     alert('LOSS');
   }
+
   drawBank();
 }
 
@@ -125,13 +155,23 @@ function draftPlayers() {
     let newTeam = Math.round(Math.random() * 1 + 1);
     player.teamNumber = newTeam;
   });
-  drawTeam1();
-  drawTeam2();
+
+  drawTeams();
 }
 
 function drawBank() {
+  const betsWonElem = document.getElementById('betsWon');
+  const moneyWonElem = document.getElementById('moneyWon');
   const bankElem = document.getElementById('bank');
+  const moneyLostElem = document.getElementById('moneyLost');
+  const betsLostElem = document.getElementById('betsLost');
+
+  betsWonElem.textContent = betsWon;
+  moneyWonElem.textContent = moneyWon;
   bankElem.textContent = bank;
+  moneyLostElem.textContent = moneyLost;
+  betsLostElem.textContent = betsLost;
+
   if (bank === 0) {
     alert('RIP Wallet!');
     return;
@@ -139,5 +179,6 @@ function drawBank() {
     alert('You are in DEBT!');
     return;
   }
+
   draftPlayers();
 }
